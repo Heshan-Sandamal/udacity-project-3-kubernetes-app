@@ -10,7 +10,7 @@ from config import app, db
 Base = declarative_base()
 
 port_number = int(os.environ.get("APP_PORT", 5153))
-app.logger.basicConfig(filename='/var/log/flask.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %('
+logging.basicConfig(filename='/var/log/flask.log', level=logging.DEBUG, format=f'%(asctime)s %(levelname)s %('
                                                                                   f'name)s %(threadName)s : %(message)s')
 
 @app.route("/health_check")
