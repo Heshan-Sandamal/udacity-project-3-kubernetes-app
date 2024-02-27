@@ -20,4 +20,10 @@ CREATE TABLE tokens
   );
 
 CREATE INDEX tokens_user_id_token_used_at_index
-  ON tokens (user_id, token, used_at); 
+  ON tokens (user_id, token, used_at);
+
+
+-- kubectl port-forward --namespace default svc/db-service1-postgresql 5432:5432 & PGPASSWORD="6GYQR0tHJH" ./psql --host 127.0.0.1 -U postgres -d postgres -p 5432
+-- \l
+-- \c postgres
+-- create data
