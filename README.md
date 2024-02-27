@@ -2,6 +2,7 @@
 This application has 2 main components.
  - DB Service
  - Analytics API
+<br><br> 
 Both of them will be deployed in Kubernetes Cluster. Analytics API will use DB-Service which is a Postgres DB to retrieve data 
 
 ### Remote Resources
@@ -17,13 +18,13 @@ Both of them will be deployed in Kubernetes Cluster. Analytics API will use DB-S
 
 2. Deploy the Postgres database & Populate Data
  - helm repo add <REPO_NAME> https://charts.bitnami.com/bitnami
- - helm install <SERVICE_NAME> <REPO_NAME>/postgresql
- - export POSTGRES_PASSWORD=$(kubectl get secret --namespace default <SERVICE_NAME>-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
+ - helm install <DB_SERVICE_NAME> <REPO_NAME>/postgresql
+ - export POSTGRES_PASSWORD=$(kubectl get secret --namespace default <DB_SERVICE_NAME>-postgresql -o jsonpath="{.data.postgres-password}" | base64 -d)
  - echo $POSTGRES_PASSWORD
- - kubectl port-forward --namespace default svc/<SERVICE_NAME>-postgresql 5432:5432 & PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432 < <FILE_NAME.sql>
+ - kubectl port-forward --namespace default svc/<DB_SERVICE_NAME>-postgresql 5432:5432 & PGPASSWORD="$POSTGRES_PASSWORD" psql --host 127.0.0.1 -U postgres -d postgres -p 5432 < <FILE_NAME.sql>
 
-3. Run `kubectl describe svc db-service` command which gives database info
-4. Then get the database info and update the host in db-config map if DB_HOST has changed
+3. Run `kubectl describe svc <SERVICE_NAME>` command which gives database info
+4. Then get the database info and update the host in db-config map ( if DB_HOST has changed )
 5. Also using base 64 encoding, encode the db password retrieved in step 2 and update DB_PASSWORD in db-secret.yaml
 6. Update the correct version of ECR image(if changed) in the analytics-api.yaml
 7. Deploy the application using following command
@@ -33,14 +34,14 @@ Both of them will be deployed in Kubernetes Cluster. Analytics API will use DB-S
 
 ## Standout Suggestions
 1. Specify reasonable Memory and CPU allocation in the Kubernetes deployment configuration
-- For the application we can start with 1 GB memory since it has only few endpoints which are not heavy
+- For the application we can start with 1 GB memory & 2 vCPUs since it has only few endpoints which are not heavy
 - Also, with the demand this will be automatically scaled
 - However, with the actual usage stats in cloudwatch, we can reconfigure this later
 
 2. Specify what AWS instance type would be best used for the application? Why?
 - Based on the scope of the API and database, T3.Medium instance which is general purpose and also has 4 GB memory, 2 vCPUs seems to be an optimal instance. 
 - These instances are medium size which can be horizontally scaled based on the demand
-- But with the time we can do more analysis, understand about actual memory and CPU usage and come up with an optimal instance type
+- But with the time, we can do more analysis, understand about actual memory and CPU usage and come up with an optimal instance type
 
 3. How to save costs
 - Starting with a few general purpose medium-sized instances which are not very expensive will reduce the upfront cost 
