@@ -2,7 +2,7 @@ import os
 
 from apscheduler.schedulers.background import BackgroundScheduler
 from flask import jsonify, request
-from sqlalchemy import and_, text
+from sqlalchemy import and_, text, Column, Integer
 from sqlalchemy.ext.declarative import declarative_base
 
 from config import app, db
@@ -19,6 +19,7 @@ def health_check():
 
 class Token(Base):
     __tablename__ = 'tokens'
+    id = Column(Integer, primary_key=True)
 
 
 @app.route("/readiness_check")
