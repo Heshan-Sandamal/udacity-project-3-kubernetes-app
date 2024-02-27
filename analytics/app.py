@@ -27,7 +27,7 @@ class Token(Base):
 def readiness_check():
     try:
         count = db.session.query(Token).count()
-        app.logger.info("Token count ", count)
+        app.logger.info("Token Count {}".format(count))
         return "ok"
     except Exception as e:
         app.logger.error(e)
@@ -49,7 +49,7 @@ def get_daily_visits():
         for row in result:
             response[str(row[0])] = row[1]
 
-        app.logger.info(response)
+        app.logger.info()
 
     return response
 

@@ -3,7 +3,7 @@ kind: ConfigMap
 data:
   DB_USERNAME: "postgres"
   DB_NAME: "postgres"
-  DB_HOST: "172.31.12.29"
+  DB_HOST: "172.31.12.181"
   DB_PORT: "5432"
 metadata:
   name: db-env
