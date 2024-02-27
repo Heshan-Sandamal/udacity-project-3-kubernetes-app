@@ -29,7 +29,7 @@ spec:
     spec:
       containers:
       - name: analytics-api
-        image: 790581391875.dkr.ecr.us-east-1.amazonaws.com/analytics-app:15
+        image: 790581391875.dkr.ecr.us-east-1.amazonaws.com/analytics-app:1.0.17
         imagePullPolicy: Always
         livenessProbe:
           httpGet:
@@ -56,7 +56,7 @@ spec:
               key: DB_HOST
         - name: DB_PASSWORD
           valueFrom:
-            configMapKeyRef:
-              name: db-env
+            secretKeyRef:
+              name: db-secret
               key: DB_PASSWORD
       restartPolicy: Always

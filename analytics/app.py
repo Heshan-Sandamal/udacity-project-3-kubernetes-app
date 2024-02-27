@@ -1,9 +1,9 @@
 import os
 
 from apscheduler.schedulers.background import BackgroundScheduler
-from flask import jsonify, request
-from sqlalchemy import and_, text, Column, Integer
-from sqlalchemy.ext.declarative import declarative_base
+from flask import jsonify
+from sqlalchemy import text, Column, Integer
+from sqlalchemy.orm import declarative_base
 
 from config import app, db
 
@@ -26,12 +26,11 @@ class Token(Base):
 def readiness_check():
     try:
         count = db.session.query(Token).count()
-        print("Token count ", count)
+        app.logger.info("Token count " + count)
+        return "ok"
     except Exception as e:
         app.logger.error(e)
         return "failed", 500
-    else:
-        return "ok"
 
 
 def get_daily_visits():
