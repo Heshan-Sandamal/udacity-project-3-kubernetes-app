@@ -2,7 +2,7 @@
 This application has 2 main components.
  - DB Service
  - Analytics API
-<br><br> 
+<br/>
 Both of them will be deployed in Kubernetes Cluster. Analytics API will use DB-Service which is a Postgres DB to retrieve data 
 
 ### Remote Resources
