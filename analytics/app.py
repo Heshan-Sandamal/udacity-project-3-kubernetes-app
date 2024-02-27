@@ -49,7 +49,7 @@ def get_daily_visits():
         for row in result:
             response[str(row[0])] = row[1]
 
-        app.logger.info()
+        app.logger.info(response)
 
     return response
 
