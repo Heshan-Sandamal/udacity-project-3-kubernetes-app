@@ -26,7 +26,7 @@ class Token(Base):
 def readiness_check():
     try:
         count = db.session.query(Token).count()
-        app.logger.info("Token count " + count)
+        app.logger.info("Token count ", count)
         return "ok"
     except Exception as e:
         app.logger.error(e)
@@ -34,6 +34,7 @@ def readiness_check():
 
 
 def get_daily_visits():
+    app.logger.info("Run daily visits scheduler")
     with app.app_context():
         result = db.session.execute(text("""
         SELECT Date(created_at) AS date,
