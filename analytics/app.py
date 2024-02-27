@@ -15,6 +15,7 @@ logging.basicConfig(filename='/var/log/flask.log', level=logging.DEBUG, format=f
 
 @app.route("/health_check")
 def health_check():
+    app.logger.info("health_check")
     return "ok"
 
 
@@ -25,6 +26,7 @@ class Token(Base):
 
 @app.route("/readiness_check")
 def readiness_check():
+    app.logger.info("readiness_check")
     try:
         count = db.session.query(Token).count()
         app.logger.info("Token Count {}".format(count))
