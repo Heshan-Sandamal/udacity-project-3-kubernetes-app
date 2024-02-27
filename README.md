@@ -1,4 +1,4 @@
-# Analytics API deployed in Kubernetes
+# Flask API + Postgres deployed in Kubernetes
 This application has 2 main components.
  - DB Service
  - Analytics API
